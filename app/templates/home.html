@@ -1,0 +1,147 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %}
+{% block hover_home %}has-background-info-dark has-text-white{% endblock %}
+{% block content %}
+<section class="hero is-medium is-link has-text-centered" style="background-image: url(static/img/back.jpg);background-position: center;background-size: cover;background-repeat: no-repeat;">
+  <div class="hero-body">
+    <p class="title is-size-1">
+       CloudBakar
+    </p>
+    <p class="subtitle">
+      Cloud Computer/Engineer
+    </p>
+  </div>
+</section>
+
+<section class="container has-text-centered">
+<br/>
+<p class="is-size-2">Welcome to my portfolio page.</p>
+  <div class="columns features is-centered ">
+
+    <section class="main">
+        <div class="wrap wrap--3">
+          <a href="/about" class="">
+          <div class="boxcontainer boxcontainer--1" style="background-image:url(static/img/3.jpeg);background-position: center;background-size: cover;background-repeat: no-repeat;">
+            <p>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa fa-address-card"></i>
+                    </span>&nbsp;
+                    <span>About Me</span>
+                  </span>
+            </p>
+          </div>
+        </a>
+        </div>
+        <div class="wrap wrap--2">
+          <a href="/projects" class="">
+          <div class="boxcontainer boxcontainer--1" style="background-image:url(static/img/2.jpeg);background-position: center;background-size: cover;background-repeat: no-repeat;">
+            <p>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa fa-code"></i>
+                    </span>&nbsp;
+                    <span>Projects</span>
+                  </span>
+            </p>
+          </div>
+        </a>
+        </div>
+        <div class="wrap wrap--1">
+          <a href="/blog" class="">
+          <div class="boxcontainer boxcontainer--1" style="background-image:url(static/img/1.jpeg);background-position: center;background-size: cover;background-repeat: no-repeat;">
+            <p>
+                <span class="icon-text">
+                    <span class="icon">
+                        <i class="fa fa-edit"></i>
+                    </span>&nbsp;
+                    <span>Blog</span>
+                  </span>
+            </p>
+          </div>
+        </a>
+        </div>
+      </section>
+
+  </div>
+
+</section>
+<script>
+    class parallaxTiltEffect {
+  constructor({element, tiltEffect}) {
+    this.element = element;
+    this.boxcontainer = this.element.querySelector(".boxcontainer");
+    this.size = [300, 360];
+    [this.w, this.h] = this.size;
+
+    this.tiltEffect = tiltEffect;
+    this.mouseOnComponent = false;
+    this.handleMouseMove = this.handleMouseMove.bind(this);
+    this.handleMouseEnter = this.handleMouseEnter.bind(this);
+    this.handleMouseLeave = this.handleMouseLeave.bind(this);
+    this.defaultStates = this.defaultStates.bind(this);
+    this.setProperty = this.setProperty.bind(this);
+    this.init = this.init.bind(this);
+    this.init();
+  }
+  handleMouseMove(event) {
+    const {offsetX, offsetY} = event;
+    let X;
+    let Y;
+
+    if(this.tiltEffect == "reverse") {
+      X = ((offsetX - (this.w/2)) / 3) /3;
+      Y = (-(offsetY - (this.h/2)) / 3) /3;
+    }
+    else if(this.tiltEffect == "normal") {
+      X = (-(offsetX - (this.w/2)) / 3) /3;
+      Y = ((offsetY - (this.h/2)) / 3) /3;
+    }
+
+    this.setProperty('--rY', X.toFixed(2));
+    this.setProperty('--rX', Y.toFixed(2));
+
+    this.setProperty('--bY', (80 - (X/4).toFixed(2)) + '%');
+    this.setProperty('--bX', (80 - (Y/4).toFixed(2)) + '%');
+  }
+  handleMouseEnter() {
+    this.mouseOnComponent = true;
+    this.boxcontainer.classList.add("boxcontainer--active");
+  }
+  handleMouseLeave() {
+    this.mouseOnComponent = false;
+    this.defaultStates();
+  }
+  defaultStates() {
+    this.boxcontainer.classList.remove("boxcontainer--active");
+    this.setProperty('--rY', 0);
+    this.setProperty('--rX', 0);
+    this.setProperty('--bY', '80%');
+    this.setProperty('--bX', '50%');
+  }
+
+  setProperty(p, v) {
+    return this.boxcontainer.style.setProperty(p, v);
+  }
+
+  init() {
+    this.element.addEventListener('mousemove', this.handleMouseMove);
+    this.element.addEventListener('mouseenter', this.handleMouseEnter);
+    this.element.addEventListener('mouseleave', this.handleMouseLeave);
+  }
+}
+const $ = e => document.querySelector(e);
+
+const wrap1 = new parallaxTiltEffect({
+  element: $('.wrap--1'),
+  tiltEffect: 'reverse'
+})
+const wrap2 = new parallaxTiltEffect({
+  element: $('.wrap--2'),
+  tiltEffect: 'normal'
+})
+const wrap3 = new parallaxTiltEffect({
+  element: $('.wrap--3'),
+  tiltEffect: 'reverse'
+})
+</script>
+{% endblock %}
